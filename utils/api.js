@@ -1,11 +1,17 @@
 import {AsyncStorage} from 'react-native'
 
+export const Flashcard_Decks_KEY = 'Flashcard_Decks'
+
 export function getDecks () {
-    //return all decks
+    return AsyncStorage.getItem(Flashcard_Decks_KEY)
+        .then(JSON.parse)
 }
 
-export function getDeck () {
-    //return one deck with single id as argument
+export function getDeck (id) {
+    return getDecks()
+        .then((results) => {
+            return results[id]
+        })
 }
 
 export function saveDeckTitle () {

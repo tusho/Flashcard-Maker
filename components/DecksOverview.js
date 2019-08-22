@@ -38,7 +38,8 @@ class DecksOverview extends Component {
                     data={decksArray}
                     renderItem={({item}) =>
                         <TouchableOpacity style={styles.item}>
-                            <Text>{JSON.stringify(item)}</Text>
+                            <Text>{item.title}</Text>
+                            <Text>Cards: {item.questions.length}</Text>
                         </TouchableOpacity>
                     }
                 />

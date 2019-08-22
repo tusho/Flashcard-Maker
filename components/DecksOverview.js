@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
+import { getDecks } from '../utils/api'
+import { receiveDecks } from '../actions'
 
 class DecksOverview extends Component {
 
@@ -7,13 +10,29 @@ class DecksOverview extends Component {
         ready: false,
     }
 
+    componentDidMount() {
+
+        const { dispatch } = this.props
+
+        getDecks()
+            .then((decks) => dispatch(receiveDecks(decks)))
+            .then(() => this.setState(() => ({ready: true})))
+
+    }
+
     render() {
         return (
             <View>
-                <Text>Decks</Text>
+                <Text>{JSON.stringify(this.props.decks)}</Text>
             </View>
         )
     }
 }
 
-export default (DecksOverview)
+function mapStateToProps (decks) {
+    return {
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(DecksOverview)

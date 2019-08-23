@@ -3,13 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform, FlatList } from 're
 import { connect } from 'react-redux'
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
-
-const white = '#fff'
+import { AppLoading } from 'expo'
+import { lightPurp } from '../utils/colors'
 
 class DecksOverview extends Component {
 
     state = {
-        ready: false,
+        ready: false
     }
 
     componentDidMount() {
@@ -23,17 +23,20 @@ class DecksOverview extends Component {
     }
 
 
-
     render() {
 
         const { decks } = this.props
+        const { ready } = this.state
 
         let decksArray = Object.keys(decks).map((val) => {
             return {'key': val, ...decks[val]}
         })
+    
+        if (ready === false) {
+          return <AppLoading />
 
-        return (
-            <View>
+        } else return (
+            <View style={styles.container}>
                 <FlatList
                     data={decksArray}
                     renderItem={({item}) =>
@@ -49,10 +52,16 @@ class DecksOverview extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     item: {
-      backgroundColor: white,
+      backgroundColor: lightPurp,
       borderRadius: Platform.OS === 'ios' ? 16 : 2,
-      padding: 20,
+      paddingTop: 40,
+      paddingBottom: 40,
+      paddingLeft: 20,
+      paddingRight: 20,
       marginLeft: 10,
       marginRight: 10,
       marginTop: 17,
@@ -64,11 +73,6 @@ const styles = StyleSheet.create({
         width: 0,
         height: 3
       },
-    },
-    noDataText: {
-      fontSize: 20,
-      paddingTop: 20,
-      paddingBottom: 20
     }
 })
 

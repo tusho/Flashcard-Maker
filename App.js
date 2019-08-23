@@ -6,14 +6,24 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { Ionicons } from '@expo/vector-icons'
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 
-const TabNavigator = createBottomTabNavigator({
-  'My Decks': DecksOverview,
-  'Add Deck': AddDeck,
-});
+const TabNavigator = {
+  'My Decks': {
+    screen: DecksOverview,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Ionicons name='md-filing' size={30} color={tintColor} />
+    }
+  },
+  'Add Deck': {
+    screen: AddDeck,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+    }
+  },
+};
 
-const TabNav = createAppContainer(TabNavigator)
+const TabNav = createAppContainer(Platform.OS === 'ios' ? createBottomTabNavigator(TabNavigator) : createMaterialTopTabNavigator(TabNavigator))
 
 export default function App() {
   return (

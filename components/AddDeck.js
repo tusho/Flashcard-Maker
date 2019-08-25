@@ -1,16 +1,77 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { lightPurp, gray } from '../utils/colors'
+
+
+function SubmitButton ({ style = {}, onPress }) {
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <Text style={[style]}>Submit</Text>
+      </TouchableOpacity>
+    )
+}
 
 class AddDeck extends Component {
 
+    state = {
+        textValue: ''
+    }
+
+    handleSubmit() {
+        const { textValue } = this.state
+        console.log(textValue)
+    }
+
     render() {
         return(
-            <View>
-                <Text>Add a Deck</Text>
+            <View style={styles.container}>
+                <Text style={styles.header}>What is the title of your new deck?</Text>
+                <TextInput 
+                    style={styles.inputField}
+                    placeholder="Deck Name"
+                    onChangeText={(val) => this.setState({textValue: val})}
+                    value={this.state.textValue}
+                />
+                <SubmitButton 
+                    style={styles.submit} 
+                    onPress={() => this.handleSubmit()}
+                />
             </View>
         )
     }
-
 }
+
+const styles = StyleSheet.create({
+    container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30
+    },
+    header: {
+        fontSize: 40,
+        textAlign: 'center',
+    },
+    inputField: {
+        marginTop: 20,
+        padding: 10,
+        borderColor: gray,
+        borderWidth: 1,
+        borderRadius: 10,
+        width: 250,
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    submit: {
+        textAlign: 'center',
+        marginTop: 25,
+        color: lightPurp,
+        padding: 10,
+        borderColor: gray,
+        borderWidth: 1,
+        borderRadius: 10,
+    }
+})
 
 export default (AddDeck)

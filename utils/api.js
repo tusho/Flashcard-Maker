@@ -1,7 +1,7 @@
 import {AsyncStorage} from 'react-native'
 
 const deckExample = {
-    'Deck_Example': {
+    'French Vocabulary Example': {
         'title': 'French Vocabulary Example',
         'questions': [
             {

@@ -41,7 +41,7 @@ class DecksOverview extends Component {
                 <FlatList
                     data={decksArray}
                     renderItem={({item}) =>
-                        <TouchableOpacity style={styles.item} onPress={() => navigate('SingleDeck')}>
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('SingleDeck', item.title)}>
                             <Text style={styles.header}>{item.title}</Text>
                             <Text style={styles.cardInfo}>Cards: {item.questions.length}</Text>
                         </TouchableOpacity>

@@ -4,6 +4,7 @@ import DecksOverview from '../components/DecksOverview'
 import AddDeck from '../components/AddDeck'
 import { Ionicons } from '@expo/vector-icons'
 import SingleDeck from '../components/SingleDeck'
+import AddCard from '../components/AddCard'
 import { createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 
 const TabNavigator = {
@@ -26,7 +27,9 @@ const TabNav = (Platform.OS === 'ios' ? createBottomTabNavigator(TabNavigator) :
 const RootNavigator = createStackNavigator({
   Home: TabNav,
   NewDeck: AddDeck,
-  SingleDeck: SingleDeck
+  SingleDeck: SingleDeck,
+  AddDeck: AddDeck,
+  AddCard: AddCard
 }, {
   headerMode: 'none'
 })

@@ -8,12 +8,13 @@ class SingleDeck extends Component {
     render() {
         const title = this.props.navigation.state.params
         const questions = this.props.state[title].questions
+        const { navigate } = this.props.navigation
 
         return (
             <View style={styles.container}>
                 <Text style={styles.header}>{title}</Text>
                 <Text style={styles.cardInfo}>Cards: {questions.length}</Text>
-                <TouchableOpacity style={styles.item}>
+                <TouchableOpacity style={styles.item} onPress={() => navigate('AddCard', title)}>
                     <Text style={{textAlign: 'center'}}>
                         Add Card
                     </Text>

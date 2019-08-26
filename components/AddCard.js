@@ -2,38 +2,43 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { lightPurp, gray } from '../utils/colors'
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
-import { saveDeckTitle } from '../utils/api'
 
-
-class AddDeck extends Component {
+class AddCard extends Component {
 
     state = {
-        textValue: ''
+        textQuestion: '',
+        textAnswer: ''
     }
 
     handleSubmit() {
-        const { textValue } = this.state
-        const { addDeck } = this.props
-        if (textValue === '' || textValue === undefined) {
-            Alert.alert('Please enter a title before clicking on \'submit\'!')
+        const { textQuestion, textAnswer } = this.state
+        if (textQuestion === '' || textAnswer === '') {
+            Alert.alert('Please enter both a question and answer before hitting \'submit\'!')
         } else {
-            addDeck(textValue)
-            saveDeckTitle(textValue)
-            this.setState({textValue: ''})
-            Alert.alert('New deck successfuly created!')
+            console.log(textQuestion + ' + ' + textAnswer)
+            this.setState({textQuestion: '', textAnswer: ''})
+            Alert.alert('New card successfuly created!')
         }     
     }
 
     render() {
+
+        const title = this.props.navigation.state.params
+
         return(
             <View style={styles.container}>
-                <Text style={styles.header}>What is the title of your new deck?</Text>
+                <Text style={styles.header}>Please enter both your question and the corresponding answer:</Text>
                 <TextInput 
                     style={styles.inputField}
-                    placeholder="Deck Name"
-                    onChangeText={(val) => this.setState({textValue: val})}
-                    value={this.state.textValue}
+                    placeholder="Question Name"
+                    onChangeText={(val) => this.setState({textQuestion: val})}
+                    value={this.state.textQuestion}
+                />
+                <TextInput 
+                    style={styles.inputField}
+                    placeholder="Corresponding Answer"
+                    onChangeText={(val) => this.setState({textAnswer: val})}
+                    value={this.state.textAnswer}
                 />
                 <TouchableOpacity>
                     <Text style={styles.submit} onPress={() => this.handleSubmit()}>Submit</Text>
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
     marginRight: 30
     },
     header: {
-        fontSize: 40,
+        fontSize: 30,
         textAlign: 'center',
     },
     inputField: {
@@ -76,10 +81,12 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapDispatchToProps (dispatch) {
+function mapStateToProps (state) {
+    
     return {
-        addDeck: (deck) => dispatch(addDeck(deck))
+        state
     }
+
 }
 
-export default connect(null, mapDispatchToProps)(AddDeck)
+export default connect(mapStateToProps)(AddCard)

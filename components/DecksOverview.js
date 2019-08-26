@@ -27,6 +27,7 @@ class DecksOverview extends Component {
 
         const { decks } = this.props
         const { ready } = this.state
+        const { navigate } = this.props.navigation
 
         let decksArray = Object.keys(decks).map((val) => {
             return {'key': val, ...decks[val]}
@@ -40,7 +41,7 @@ class DecksOverview extends Component {
                 <FlatList
                     data={decksArray}
                     renderItem={({item}) =>
-                        <TouchableOpacity style={styles.item}>
+                        <TouchableOpacity style={styles.item} onPress={() => navigate('SingleDeck')}>
                             <Text style={styles.header}>{item.title}</Text>
                             <Text style={styles.cardInfo}>Cards: {item.questions.length}</Text>
                         </TouchableOpacity>

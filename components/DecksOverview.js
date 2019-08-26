@@ -41,8 +41,8 @@ class DecksOverview extends Component {
                     data={decksArray}
                     renderItem={({item}) =>
                         <TouchableOpacity style={styles.item}>
-                            <Text>{item.title}</Text>
-                            <Text>Cards: {item.questions.length}</Text>
+                            <Text style={styles.header}>{item.title}</Text>
+                            <Text style={styles.cardInfo}>Cards: {item.questions.length}</Text>
                         </TouchableOpacity>
                     }
                 />
@@ -73,6 +73,15 @@ const styles = StyleSheet.create({
         width: 0,
         height: 3
       },
+    },
+    header: {
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    cardInfo: {
+        fontSize: 16,
+        marginTop: 4,
+        textAlign: 'center',
     }
 })
 

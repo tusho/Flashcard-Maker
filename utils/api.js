@@ -39,7 +39,7 @@ export function getDeck (id) {
 
 export function saveDeckTitle (title) {
     const deck = { title, questions: [] }
-    return AsyncStorage.mregeItem(Flashcard_Decks_KEY, JSON.stringify({
+    return AsyncStorage.mergeItem(Flashcard_Decks_KEY, JSON.stringify({
         [title]: deck
       }))
 }

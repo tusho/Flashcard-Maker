@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { lightPurp, gray } from '../utils/colors'
-
+import { connect } from 'react-redux'
+import { addDeck } from '../actions'
+import { saveDeckTitle } from '../utils/api'
 
 function SubmitButton ({ style = {}, onPress }) {
     return (
@@ -19,7 +21,13 @@ class AddDeck extends Component {
 
     handleSubmit() {
         const { textValue } = this.state
-        console.log(textValue)
+        const { addDeck } = this.props
+        {(textValue === '' || textValue === undefined) 
+            ? Alert.alert('Please enter a title before clicking on \'submit\'!')
+            : addDeck(textValue)}
+              saveDeckTitle(textValue)
+              this.setState({textValue: ''})
+              Alert.alert('New deck successfuly created!')
     }
 
     render() {
@@ -74,4 +82,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default (AddDeck)
+function mapDispatchToProps (dispatch) {
+    return {
+        addDeck: (deck) => dispatch(addDeck(deck))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AddDeck)

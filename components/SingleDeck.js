@@ -19,7 +19,7 @@ class SingleDeck extends Component {
                         Add Card
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.item}>
+                <TouchableOpacity style={styles.item} onPress={() => navigate('Quiz', title)}>
                     <Text style={{textAlign: 'center'}}>
                         Start Quiz
                     </Text>

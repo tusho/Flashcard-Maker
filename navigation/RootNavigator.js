@@ -5,6 +5,7 @@ import AddDeck from '../components/AddDeck'
 import { Ionicons } from '@expo/vector-icons'
 import SingleDeck from '../components/SingleDeck'
 import AddCard from '../components/AddCard'
+import Quiz from '../components/Quiz'
 import { createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 
 const TabNavigator = {
@@ -29,7 +30,8 @@ const RootNavigator = createStackNavigator({
   NewDeck: AddDeck,
   SingleDeck: SingleDeck,
   AddDeck: AddDeck,
-  AddCard: AddCard
+  AddCard: AddCard,
+  Quiz: Quiz,
 }, {
   headerMode: 'none'
 })

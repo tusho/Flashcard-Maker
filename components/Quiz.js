@@ -7,13 +7,17 @@ import { connect } from 'react-redux'
 class Quiz extends Component {
 
     state = {
-        showAnswer: false
+        showAnswer: false,
+        showCounter: true,
     }
 
     render() {
-        const { showAnswer } = this.state
+        const { showAnswer, showCounter } = this.state
+        const title = this.props.navigation.state.params
+        
         return(
             <View style={styles.container}>
+                {showCounter === true && <Text style={styles.counter}>Counter</Text>}
                 {showAnswer === false 
                     ? <View>
                         <Text style={styles.header}>Question</Text>
@@ -73,6 +77,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
         marginBottom: 20
+    },
+    counter: {
+        ...StyleSheet.absoluteFillObject,
+        position: 'absolute',
+        alignSelf: 'flex-start',
+        marginTop: 15,
+        fontSize: 15
     }
 })
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { lightPurp, gray } from '../utils/colors'
 import { connect } from 'react-redux'
+import { addCard } from '../actions'
+import { addCardToDeck } from '../utils/api'
 
 class AddCard extends Component {
 
@@ -12,18 +14,21 @@ class AddCard extends Component {
 
     handleSubmit() {
         const { textQuestion, textAnswer } = this.state
+        const title = this.props.navigation.state.params
+        const { addCard } = this.props
+        const card = { question: textQuestion, answer: textAnswer}
+
         if (textQuestion === '' || textAnswer === '') {
             Alert.alert('Please enter both a question and answer before hitting \'submit\'!')
         } else {
-            console.log(textQuestion + ' + ' + textAnswer)
+            addCard(title, card)
+            addCardToDeck(title, card)
             this.setState({textQuestion: '', textAnswer: ''})
             Alert.alert('New card successfuly created!')
         }     
     }
 
     render() {
-
-        const title = this.props.navigation.state.params
 
         return(
             <View style={styles.container}>
@@ -81,6 +86,12 @@ const styles = StyleSheet.create({
     }
 })
 
+function mapDispatchToProps (dispatch) {
+    return {
+        addCard: (title, card) => dispatch(addCard(title, card))
+    }
+}
+
 function mapStateToProps (state) {
     
     return {
@@ -89,4 +100,4 @@ function mapStateToProps (state) {
 
 }
 
-export default connect(mapStateToProps)(AddCard)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCard)

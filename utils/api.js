@@ -1,5 +1,6 @@
 import {AsyncStorage} from 'react-native'
 
+
 const deckExample = {
     'French Vocabulary Example': {
         'title': 'French Vocabulary Example',
@@ -16,9 +17,12 @@ const deckExample = {
     }
 }
 
+
 export const Flashcard_Decks_KEY = 'Flashcard_Decks'
 
+
 export function getDecks () {
+
     return AsyncStorage.getItem(Flashcard_Decks_KEY)
         .then(result => {
             if (result === null) {
@@ -28,22 +32,34 @@ export function getDecks () {
                 return JSON.parse(result)
             }
         })
+
 }
 
 export function getDeck (id) {
+
     return getDecks()
         .then((results) => {
             return results[id]
         })
+
 }
 
 export function saveDeckTitle (title) {
+
     const deck = { title, questions: [] }
     return AsyncStorage.mergeItem(Flashcard_Decks_KEY, JSON.stringify({
         [title]: deck
-      }))
+    }))
+
 }
 
-export function addCardToDeck () {
-    //take title and card argument and add the card to the list of questions for the deck with the associated title
+export function addCardToDeck (title, card) {
+    
+    return AsyncStorage.getItem(Flashcard_Decks_KEY)
+		.then((results) => {
+			const data = JSON.parse(results)
+			data[title]['questions'].push(card)
+			AsyncStorage.setItem(Flashcard_Decks_KEY, JSON.stringify(data))
+    })
+    
 }

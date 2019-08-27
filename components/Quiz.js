@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { lightPurp, gray, green, red } from '../utils/colors'
 import { connect } from 'react-redux'
 
@@ -9,25 +9,38 @@ class Quiz extends Component {
     state = {
         showAnswer: false,
         showCounter: true,
+        questionCounter: 0,
+        correctCounter: 0,
     }
 
     render() {
         const { showAnswer, showCounter } = this.state
+
         const title = this.props.navigation.state.params
+        const questions = this.props.state[title].questions
+
+        handleCorrect = () => {
+            const { questionCounter } = this.state
+            if (questionCounter < (questions.length - 1)) {
+                this.setState({ questionCounter: questionCounter + 1 })
+            } else if (questionCounter = (questions.length - 1)) {
+                Alert.alert('Quiz completed')
+            }
+        }
         
         return(
             <View style={styles.container}>
                 {showCounter === true && <Text style={styles.counter}>Counter</Text>}
                 {showAnswer === false 
                     ? <View>
-                        <Text style={styles.header}>Question</Text>
+                        <Text style={styles.header}>{JSON.stringify(questions[this.state.questionCounter].question)}</Text>
                         <Text style={styles.showAnswerText} onPress={() => this.setState({showAnswer: true})}>Show Answer</Text>
                       </View>
                     : <View>
-                        <Text style={styles.header}>Answer</Text>
+                        <Text style={styles.header}>{JSON.stringify(questions[this.state.questionCounter].answer)}</Text>
                       </View>
                 }
-                <TouchableOpacity style={[styles.submit, styles.correct]}>
+                <TouchableOpacity style={[styles.submit, styles.correct]} onPress={() => handleCorrect()}>
                     <Text style={styles.buttonText}>Correct</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.submit, styles.incorrect]}>

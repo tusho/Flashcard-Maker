@@ -140,15 +140,15 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     routeButton: {
+        width: 150,
+        alignSelf: 'center',
         textAlign: 'center',
-        marginTop: 25,
+        marginTop: 20,
         color: lightPurp,
-        padding: 5,
+        padding: 10,
         borderColor: gray,
-        backgroundColor: lightGray,
         borderWidth: 1,
         borderRadius: 10,
-        width: 200
     },
     routeButtonText: {
         textAlign: 'center',

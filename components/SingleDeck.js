@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
-import { lightBlue } from '../utils/colors'
+import { lightBlue, lightPurp, gray, lightGray } from '../utils/colors'
 
 class SingleDeck extends Component {
 
@@ -23,6 +23,9 @@ class SingleDeck extends Component {
                     <Text style={{textAlign: 'center'}}>
                         Start Quiz
                     </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.routeButton} onPress={() => navigate('Home')}>
+                    <Text style={styles.routeButtonText}>Home</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -62,6 +65,21 @@ const styles = StyleSheet.create({
         marginTop: 4,
         marginBottom: 20,
         textAlign: 'center',
+    },
+    routeButton: {
+        width: 100,
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginTop: 100,
+        color: lightPurp,
+        padding: 10,
+        borderColor: gray,
+        borderWidth: 1,
+        borderRadius: 10,
+    },
+    routeButtonText: {
+        textAlign: 'center',
+        fontSize: 20
     }
 })
 

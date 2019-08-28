@@ -54,7 +54,7 @@ class Quiz extends Component {
                         <Text style={styles.counter}>Counter: {questionCounter + 1}/{totalQuestions}</Text>
                         {showAnswer === false 
                             ? <View>
-                                <Text style={styles.header}>{JSON.stringify(questions[questionCounter].question)}</Text>
+                                <Text style={styles.header}>{questions[questionCounter].question}</Text>
                                 <Text style={styles.showAnswerText} onPress={() => this.setState({showAnswer: true})}>Show Answer</Text>
                             </View>
                             : <View>

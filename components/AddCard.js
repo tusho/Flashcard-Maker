@@ -15,7 +15,7 @@ class AddCard extends Component {
     handleSubmit() {
         const { textQuestion, textAnswer } = this.state
         const title = this.props.navigation.state.params
-        const { addCard } = this.props
+        const { addCard, navigation } = this.props
         const card = { question: textQuestion, answer: textAnswer}
 
         if (textQuestion === '' || textAnswer === '') {
@@ -24,6 +24,7 @@ class AddCard extends Component {
             addCard(title, card)
             addCardToDeck(title, card)
             this.setState({textQuestion: '', textAnswer: ''})
+            navigation.pop(1)
             Alert.alert('New card successfuly created!')
         }     
     }

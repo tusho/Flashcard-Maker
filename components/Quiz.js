@@ -1,51 +1,86 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import { lightPurp, gray, green, red } from '../utils/colors'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { lightPurp, gray, green, red, lightGray } from '../utils/colors'
 import { connect } from 'react-redux'
-
 
 class Quiz extends Component {
 
     state = {
         showAnswer: false,
-        showCounter: true,
+        showResult: false,
         questionCounter: 0,
-        correctCounter: 0,
+        answerCounter: 0,
     }
 
     render() {
-        const { showAnswer, showCounter } = this.state
-
+        const { showAnswer, showResult, answerCounter } = this.state
+        let { questionCounter } = this.state
+        const { navigation } = this.props
+        const { navigate } = navigation
         const title = this.props.navigation.state.params
         const questions = this.props.state[title].questions
+        const totalQuestions = questions.length
 
-        handleCorrect = () => {
-            const { questionCounter } = this.state
+        handleSubmit = (status) => {
+            {status === 'correct' && this.setState({ answerCounter: answerCounter + 1 })}
             if (questionCounter < (questions.length - 1)) {
-                this.setState({ questionCounter: questionCounter + 1 })
+                this.setState({ questionCounter: questionCounter + 1, showAnswer: false})
             } else if (questionCounter = (questions.length - 1)) {
-                Alert.alert('Quiz completed')
+                this.setState({ questionCounter: 0, showResult: true })
             }
         }
+
+        handleReset = () => {
+            this.setState({ questionCounter: 0, showAnswer: false, answerCounter: 0, showResult: false})
+        }
         
-        return(
-            <View style={styles.container}>
-                {showCounter === true && <Text style={styles.counter}>Counter</Text>}
-                {showAnswer === false 
-                    ? <View>
-                        <Text style={styles.header}>{JSON.stringify(questions[this.state.questionCounter].question)}</Text>
-                        <Text style={styles.showAnswerText} onPress={() => this.setState({showAnswer: true})}>Show Answer</Text>
-                      </View>
-                    : <View>
-                        <Text style={styles.header}>{JSON.stringify(questions[this.state.questionCounter].answer)}</Text>
-                      </View>
+        if (totalQuestions === 0) {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.header}>No quesitons in this deck!</Text>
+                    <TouchableOpacity style={styles.routeButton} onPress={() => navigation.pop(1)}>
+                        <Text style={styles.routeButtonText}>Back to Deck</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.routeButton} onPress={() => navigate('Home')}>
+                        <Text style={styles.routeButtonText}>Home</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        } return (
+            <View style={{flex: 1}}>
+                {showResult === false 
+                    ?
+                    <View style={styles.container}>
+                        <Text style={styles.counter}>Counter: {questionCounter + 1}/{totalQuestions}</Text>
+                        {showAnswer === false 
+                            ? <View>
+                                <Text style={styles.header}>{JSON.stringify(questions[questionCounter].question)}</Text>
+                                <Text style={styles.showAnswerText} onPress={() => this.setState({showAnswer: true})}>Show Answer</Text>
+                            </View>
+                            : <View>
+                                <Text style={styles.header}>{JSON.stringify(questions[questionCounter].answer)}</Text>
+                            </View>
+                        }
+                        <TouchableOpacity style={[styles.submit, styles.correct]} onPress={() => handleSubmit('correct')}>
+                            <Text style={styles.buttonText}>Correct</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.submit, styles.incorrect]} onPress={() => handleSubmit('incorrect')}>
+                            <Text style={styles.buttonText}>Incorrect</Text>
+                        </TouchableOpacity>
+                    </View>
+                    : 
+                    <View style={styles.container}>
+                        <Text style={styles.header}>Result</Text>
+                        <Text style={styles.percentage}>{Math.floor((answerCounter / totalQuestions) * 100)}%</Text>
+                        <Text style={{marginBottom: 20}}>You correclty answered {answerCounter} out of {totalQuestions} questions.</Text>
+                        <TouchableOpacity style={styles.routeButton} onPress={() => handleReset()}>
+                            <Text style={styles.routeButtonText}>Restart Quiz</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.routeButton} onPress={() => navigation.pop(1)}>
+                            <Text style={styles.routeButtonText}>Back to Deck</Text>
+                        </TouchableOpacity>
+                    </View>
                 }
-                <TouchableOpacity style={[styles.submit, styles.correct]} onPress={() => handleCorrect()}>
-                    <Text style={styles.buttonText}>Correct</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.submit, styles.incorrect]}>
-                    <Text style={styles.buttonText}>Incorrect</Text>
-                </TouchableOpacity>
             </View>
         )
     }
@@ -97,6 +132,27 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginTop: 15,
         fontSize: 15
+    },
+    percentage: {
+        fontSize: 50,
+        color: green,
+        fontWeight: 'bold',
+        marginBottom: 10
+    },
+    routeButton: {
+        textAlign: 'center',
+        marginTop: 25,
+        color: lightPurp,
+        padding: 5,
+        borderColor: gray,
+        backgroundColor: lightGray,
+        borderWidth: 1,
+        borderRadius: 10,
+        width: 200
+    },
+    routeButtonText: {
+        textAlign: 'center',
+        fontSize: 20
     }
 })
 

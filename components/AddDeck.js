@@ -15,12 +15,15 @@ class AddDeck extends Component {
     handleSubmit() {
         const { textValue } = this.state
         const { addDeck } = this.props
+        const { navigate } = this.props.navigation
+
         if (textValue === '' || textValue === undefined) {
             Alert.alert('Please enter a title before clicking on \'submit\'!')
         } else {
             addDeck(textValue)
             saveDeckTitle(textValue)
             this.setState({textValue: ''})
+            navigate('SingleDeck', textValue)
             Alert.alert('New deck successfuly created!')
         }     
     }

@@ -24,7 +24,7 @@ class SingleDeck extends Component {
                         Start Quiz
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.routeButton} onPress={() => navigate('Home')}>
+                <TouchableOpacity style={styles.routeButton} onPress={() => navigate('My Decks')}>
                     <Text style={styles.routeButtonText}>Home</Text>
                 </TouchableOpacity>
             </View>

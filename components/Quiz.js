@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { lightPurp, gray, green, red, lightGray } from '../utils/colors'
+import { lightPurp, gray, green, red } from '../utils/colors'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/notification'
 
 class Quiz extends Component {
 
@@ -26,6 +27,7 @@ class Quiz extends Component {
             if (questionCounter < (questions.length - 1)) {
                 this.setState({ questionCounter: questionCounter + 1, showAnswer: false})
             } else if (questionCounter = (questions.length - 1)) {
+                clearLocalNotification().then(setLocalNotification())
                 this.setState({ questionCounter: 0, showResult: true })
             }
         }

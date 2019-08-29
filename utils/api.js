@@ -22,7 +22,6 @@ export const Flashcard_Decks_KEY = 'Flashcard_Decks'
 
 
 export function getDecks () {
-
     return AsyncStorage.getItem(Flashcard_Decks_KEY)
         .then(result => {
             if (result === null) {

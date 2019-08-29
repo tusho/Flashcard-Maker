@@ -6,6 +6,7 @@ import reducer from './reducers'
 import Constants from 'expo-constants'
 import { lightGray } from './utils/colors'
 import RootNavigator from './navigation/RootNavigator.js'
+import { setLocalNotification } from './utils/notification'
 
 function MyStatusBar ({backgroundColor, ...props}) {
   return (
@@ -15,11 +16,19 @@ function MyStatusBar ({backgroundColor, ...props}) {
   )
 }
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer)}>
-      <MyStatusBar backgroundColor={lightGray} barStyle="light-content" />
-      <RootNavigator />
-    </Provider>
-  );
+export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <MyStatusBar backgroundColor={lightGray} barStyle="light-content" />
+        <RootNavigator />
+      </Provider>
+    );
+
+  }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Platform, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
-import { lightBlue, lightPurp, gray, lightGray } from '../utils/colors'
+import { lightBlue, lightPurp, gray } from '../utils/colors'
 
 class SingleDeck extends Component {
 
